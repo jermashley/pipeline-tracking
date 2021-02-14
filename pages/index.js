@@ -1,65 +1,77 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useContext } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBan } from '@fortawesome/pro-solid-svg-icons'
+import { FilterContext } from '@/lib/FilterContext'
+import Default from '@/layouts/default'
+import { Heading1, Heading2 } from '@/components/Headings'
+import TrackingNumberForm from '@/components/TrackingNumberForm'
+import TrackingFilter from '@/components/TrackingFilter'
+import Overlay from '@/components/Overlay'
+import { SmallButton } from '@/components/Buttons'
+import { LocalStorageContext } from '@/lib/LocalStorageContext'
+import MiniCard from '@/components/MiniCard'
 
-export default function Home() {
+const Home = () => {
+  const { trackingResults } = useContext(FilterContext)
+  const { storedTrackingItems, clearStoredTrackingItems } = useContext(
+    LocalStorageContext,
+  )
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Default>
+      <Heading1
+        className="mt-12"
+        style={{
+          lineHeight: `3rem`,
+        }}
+      >
+        Shipment Tracking
+      </Heading1>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <p className="text-base text-coolGray-500 dark:text-coolGray-300">
+        Select the type of shipment you would like to track and shipment ID you
+        have below.
+      </p>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+      {/* Tracking selector */}
+      <TrackingFilter />
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+      <TrackingNumberForm />
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+      <Overlay active={trackingResults?.length !== 0}>
+        {trackingResults?.length !== 0 && (
+          <Heading2>{trackingResults?.id}</Heading2>
+        )}
+      </Overlay>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+      <section className="mt-24">
+        <div className="flex flex-row justify-between items-center">
+          <Heading2>Recently Tracked</Heading2>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {storedTrackingItems?.length >= 1 && (
+            <SmallButton onClick={() => clearStoredTrackingItems()}>
+              <FontAwesomeIcon icon={faBan} fixedWidth={true} />
+            </SmallButton>
+          )}
         </div>
-      </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+        {storedTrackingItems?.length >= 1 ? (
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4">
+            {storedTrackingItems?.map((storedTrackingItem) => (
+              <MiniCard
+                key={storedTrackingItem.carrierPro}
+                trackingData={storedTrackingItem}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-xl text-coolGray-500 font-medium mt-4">
+            Nothing here &mdash; yet!
+          </p>
+        )}
+      </section>
+    </Default>
   )
 }
+
+export default Home
