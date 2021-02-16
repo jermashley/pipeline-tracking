@@ -59,7 +59,7 @@ const Home = () => {
           <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4">
             {storedTrackingItems?.map((storedTrackingItem) => (
               <MiniCard
-                key={storedTrackingItem.carrierPro}
+                key={storedTrackingItem.key}
                 trackingData={storedTrackingItem}
               />
             ))}

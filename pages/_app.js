@@ -4,6 +4,7 @@ import { persistWithLocalStorage } from 'react-query/persist-localstorage-experi
 import { FilterContextProvider } from '@/lib/FilterContext'
 import '@/styles/tailwind.css'
 import { LocalStorageContextProvider } from '@/lib/LocalStorageContext'
+import { SearchContextProvider } from '@/lib/SearchContext'
 
 const queryClient = new QueryClient()
 persistWithLocalStorage(queryClient)
@@ -13,8 +14,10 @@ function MyApp({ Component, pageProps }) {
     <QueryClientProvider client={queryClient}>
       <LocalStorageContextProvider>
         <FilterContextProvider>
-          <Component {...pageProps} />
-          <ReactQueryDevtools initialIsOpen={false} />
+          <SearchContextProvider>
+            <Component {...pageProps} />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </SearchContextProvider>
         </FilterContextProvider>
       </LocalStorageContextProvider>
     </QueryClientProvider>

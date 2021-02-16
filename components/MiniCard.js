@@ -1,5 +1,7 @@
 import { useContext } from 'react'
+import { format } from 'date-fns'
 import { LocalStorageContext } from '@/lib/LocalStorageContext'
+import { SearchContext } from '@/lib/SearchContext'
 import { SmallButton } from '@/components/Buttons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -7,37 +9,70 @@ import {
   faSearch,
   faArrowRight,
 } from '@fortawesome/pro-solid-svg-icons'
+import { FilterContext } from '@/lib/FilterContext'
 
 const MiniCard = ({ trackingData }) => {
+  const {
+    setSelectedShipmentType,
+    setSelectedIdentifier,
+    setTrackingNumber,
+  } = useContext(FilterContext)
+  const { searchForShipment } = useContext(SearchContext)
   const { removeItemFromStoredTrackingItems } = useContext(LocalStorageContext)
+
+  const setItemsFromHistory = async () => {
+    setTrackingNumber(trackingData[trackingData.selectedIdentifier])
+    setSelectedShipmentType(trackingData.selectedShipmentType)
+    setSelectedIdentifier(trackingData.selectedIdentifier)
+  }
+
+  const searchFromHistory = () => {
+    setItemsFromHistory().then(() => {
+      searchForShipment()
+    })
+  }
 
   return (
     <div className="transition-shadow duration-300 w-full flex flex-row justify-between items-center px-4 py-3 rounded-lg bg-white dark:bg-coolGray-800 border border-coolGray-200 dark:border-coolGray-700 group hover:shadow-xl">
-      <div>
+      <div className="flex flex-col justify-between items-start h-full">
         <p className="text-coolGray-700 dark:text-coolGray-200 text-sm font-medium">
-          {trackingData.carrierPro}
+          {trackingData[trackingData.selectedIdentifier]}
         </p>
 
-        <p className="flex flex-row items-center text-coolGray-500 dark:text-coolGray-400 text-xs font-normal">
-          {trackingData.originLocation.zipCode}
-          <FontAwesomeIcon
-            icon={faArrowRight}
-            fixedWidth={true}
-            className="mx-1"
-            style={{
-              fontSize: `8px`,
-            }}
-          />
-          {trackingData.destinationLocation.zipCode}
+        {/*{trackingData.originLocation && trackingData.destinationLocation && (*/}
+        {/*  <p className="flex flex-row items-center text-coolGray-500 dark:text-coolGray-400 text-xs font-normal">*/}
+        {/*    {trackingData.originLocation.zipCode}*/}
+        {/*    <FontAwesomeIcon*/}
+        {/*      icon={faArrowRight}*/}
+        {/*      fixedWidth={true}*/}
+        {/*      className="mx-1"*/}
+        {/*      style={{*/}
+        {/*        fontSize: `8px`,*/}
+        {/*      }}*/}
+        {/*    />*/}
+        {/*    {trackingData.destinationLocation.zipCode}*/}
+        {/*  </p>*/}
+        {/*)}*/}
+
+        <p className="text-coolGray-500 dark:text-coolGray-400 text-xs font-normal mt-0.5">
+          <date>{format(trackingData.key, `PP`)}</date>
+          <span className="mx-1">&#64;</span>
+          <time>{format(trackingData.key, `p`)}</time>
         </p>
+
+        <div className="flex flex-row justify-start items-center space-x-2 mt-2">
+          <span className="tracking-wide capitalize block px-2 py-0.5 rounded bg-coolGray-100 dark:bg-coolGray-900 text-xs text-coolGray-500 dark:text-coolGray-400 font-medium">
+            {trackingData.selectedShipmentType}
+          </span>
+
+          <span className="tracking-wide block px-2 py-0.5 rounded bg-coolGray-100 dark:bg-coolGray-900 text-xs text-coolGray-500 dark:text-coolGray-400 font-medium">
+            {trackingData.selectedIdentifier}
+          </span>
+        </div>
       </div>
 
       <div className="transition-opacity duration-300 flex flex-row space-x-2 opacity-0 group-hover:opacity-100">
-        <SmallButton
-          onClick={() =>
-            removeItemFromStoredTrackingItems(trackingData.carrierPro)
-          }
-        >
+        <SmallButton onClick={() => searchFromHistory()}>
           <FontAwesomeIcon icon={faSearch} fixedWidth={true} />
         </SmallButton>
 

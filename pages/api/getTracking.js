@@ -18,10 +18,16 @@ export default async (req, res) => {
         },
       )
       .then((res) => {
+        if (res.data.data.length === 0) {
+          throw new Error(`No shipment data returned.`)
+        }
+
+        res.statusCode = 200
+
         return res.data
       })
-      .catch(() => {
-        return res.status(300)
+      .catch((e) => {
+        res.statusCode = 404
       })
 
     const shipmentData = data
@@ -32,7 +38,7 @@ export default async (req, res) => {
     )
 
     setTimeout(() => {
-      return res.status(200).json({ shipmentData })
+      return res.json({ shipmentData })
     }, 2000)
   }
 }

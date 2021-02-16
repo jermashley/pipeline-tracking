@@ -1,59 +1,42 @@
-import { useContext, useState } from 'react'
-import axios from 'axios'
+import { useContext } from 'react'
 import { Heading2 } from '@/components/Headings'
 import { SmallButton } from '@/components/Buttons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faMinusCircle } from '@fortawesome/pro-solid-svg-icons'
+import {
+  faSearch,
+  faMinusCircle,
+  faExclamationCircle,
+} from '@fortawesome/pro-solid-svg-icons'
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons'
 import { FilterContext } from '@/lib/FilterContext'
-import { useQuery } from 'react-query'
-import { LocalStorageContext } from '@/lib/LocalStorageContext'
+import { SearchContext } from '@/lib/SearchContext'
 
 const TrackingNumberForm = () => {
-  const {
-    selectedIdentifier,
-    setTrackingResults,
-    trackingNumber,
-    setTrackingNumber,
-  } = useContext(FilterContext)
-
-  const { addItemToStoredTrackingItems } = useContext(LocalStorageContext)
-
-  const { isLoading, error, data, isFetching, refetch } = useQuery(
-    `getTracking`,
-    async () =>
-      axios.post(
-        `/api/getTracking`,
-        {
-          trackNum: trackingNumber,
-          searchOption: selectedIdentifier,
-          globalSearch: true,
-        },
-        {
-          headers: {
-            'Content-Type': `application/json`,
-          },
-        },
-      ),
-    {
-      refetchOnWindowFocus: false,
-      enabled: false,
-    },
+  const { selectedIdentifier, trackingNumber, setTrackingNumber } = useContext(
+    FilterContext,
   )
 
-  const getTrackingRequest = () => {
-    refetch().then(() => {
-      if (data) {
-        setTrackingResults(data.data.shipmentData[0])
-
-        addItemToStoredTrackingItems(data.data.shipmentData[0])
-      }
-    })
-  }
+  const { isLoading, searchForShipment, error } = useContext(SearchContext)
 
   return (
     <>
-      <Heading2 className="mt-16 mb-2">Tracking Number</Heading2>
+      <div className="flex flex-row justify-between items-center mt-16 mb-2">
+        <Heading2>Tracking Number</Heading2>
+
+        <span
+          className="transition-opacity duration-300 text-sm text-red-400"
+          style={{
+            opacity: error ? 100 : 0,
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faExclamationCircle}
+            fixedWidth={true}
+            className="mr-1"
+          />
+          We couldn&apos;t find that shipment
+        </span>
+      </div>
 
       <form
         onSubmit={(event) => event.preventDefault()}
@@ -79,7 +62,7 @@ const TrackingNumberForm = () => {
         />
 
         <div className="w-6 h-6 flex flex-row justify-start items-center">
-          {(isFetching || isLoading) && (
+          {isLoading && (
             <FontAwesomeIcon
               icon={faSpinnerThird}
               className="text-lg text-coolGray-400"
@@ -98,7 +81,7 @@ const TrackingNumberForm = () => {
             />
           </SmallButton>
 
-          <SmallButton onClick={() => getTrackingRequest()}>
+          <SmallButton onClick={() => searchForShipment()}>
             <FontAwesomeIcon
               icon={faSearch}
               fixedWidth={true}
