@@ -2,14 +2,11 @@ import { useContext } from 'react'
 import { format } from 'date-fns'
 import { LocalStorageContext } from '@/lib/LocalStorageContext'
 import { SearchContext } from '@/lib/SearchContext'
+import { FilterContext } from '@/lib/FilterContext'
 import { SmallButton } from '@/components/Buttons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faTrashAlt,
-  faSearch,
-  faArrowRight,
-} from '@fortawesome/pro-solid-svg-icons'
-import { FilterContext } from '@/lib/FilterContext'
+import { faTrashAlt, faSearch } from '@fortawesome/pro-solid-svg-icons'
+import { returnReadableIdentifier } from '@/lib/readableIdentifiers'
 
 const MiniCard = ({ trackingData }) => {
   const {
@@ -39,21 +36,6 @@ const MiniCard = ({ trackingData }) => {
           {trackingData[trackingData.selectedIdentifier]}
         </p>
 
-        {/*{trackingData.originLocation && trackingData.destinationLocation && (*/}
-        {/*  <p className="flex flex-row items-center text-coolGray-500 dark:text-coolGray-400 text-xs font-normal">*/}
-        {/*    {trackingData.originLocation.zipCode}*/}
-        {/*    <FontAwesomeIcon*/}
-        {/*      icon={faArrowRight}*/}
-        {/*      fixedWidth={true}*/}
-        {/*      className="mx-1"*/}
-        {/*      style={{*/}
-        {/*        fontSize: `8px`,*/}
-        {/*      }}*/}
-        {/*    />*/}
-        {/*    {trackingData.destinationLocation.zipCode}*/}
-        {/*  </p>*/}
-        {/*)}*/}
-
         <p className="text-coolGray-500 dark:text-coolGray-400 text-xs font-normal mt-0.5">
           <date>{format(trackingData.key, `PP`)}</date>
           <span className="mx-1">&#64;</span>
@@ -62,11 +44,11 @@ const MiniCard = ({ trackingData }) => {
 
         <div className="flex flex-row justify-start items-center space-x-2 mt-2">
           <span className="tracking-wide capitalize block px-2 py-0.5 rounded bg-coolGray-100 dark:bg-coolGray-900 text-xs text-coolGray-500 dark:text-coolGray-400 font-medium">
-            {trackingData.selectedShipmentType}
+            {returnReadableIdentifier(trackingData.selectedShipmentType)}
           </span>
 
           <span className="tracking-wide block px-2 py-0.5 rounded bg-coolGray-100 dark:bg-coolGray-900 text-xs text-coolGray-500 dark:text-coolGray-400 font-medium">
-            {trackingData.selectedIdentifier}
+            {returnReadableIdentifier(trackingData.selectedIdentifier)}
           </span>
         </div>
       </div>

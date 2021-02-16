@@ -31,14 +31,16 @@ const Navbar = () => {
       {lightTheme ? <FwLogoColor /> : <FwLogoWhite />}
 
       <a
-        href="#"
+        href="https://flatworldgs.com"
+        target="_blank"
+        rel="noreferrer"
         className="transition-all duration-300 text-sm font-bold uppercase flex flex-row justify-start items-center space-x-2 text-brand-base hover:text-brand-hover dark:text-coolGray-200 dark:hover:text-coolGray-400 group"
       >
         <span>Global Solutions Home</span>
-        {` `}
+
         <FontAwesomeIcon
           icon={faArrowRight}
-          className="transform group-hover:translate-x-1"
+          className="transform ml-2 group-hover:animate-ping"
         />
       </a>
     </nav>

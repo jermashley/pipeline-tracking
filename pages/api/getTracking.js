@@ -18,7 +18,7 @@ export default async (req, res) => {
         },
       )
       .then((res) => {
-        if (res.data.data.length === 0) {
+        if (res.data.data.length === 0 || res.data.data[0]?.id === `348`) {
           throw new Error(`No shipment data returned.`)
         }
 
@@ -39,6 +39,6 @@ export default async (req, res) => {
 
     setTimeout(() => {
       return res.json({ shipmentData })
-    }, 2000)
+    }, 5000)
   }
 }

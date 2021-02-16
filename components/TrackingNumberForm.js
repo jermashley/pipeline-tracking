@@ -65,9 +65,8 @@ const TrackingNumberForm = () => {
           {isLoading && (
             <FontAwesomeIcon
               icon={faSpinnerThird}
-              className="text-lg text-coolGray-400"
+              className="text-lg text-coolGray-400 animate-spin"
               fixedWidth={true}
-              spin={true}
             />
           )}
         </div>

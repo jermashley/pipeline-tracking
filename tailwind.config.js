@@ -131,6 +131,7 @@ module.exports = {
   },
   variants: {
     extend: {
+      animation: [`hover`, `focus`],
       borderColor: [`hover`, `focus`],
       borderRadius: [`hover`, `focus`],
       borderWidth: [`hover`, `focus`],
