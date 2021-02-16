@@ -42,7 +42,7 @@ const MiniCard = ({ trackingData }) => {
           <time>{format(trackingData.key, `p`)}</time>
         </p>
 
-        <div className="flex flex-row justify-start items-center space-x-2 mt-2">
+        <div className="flex flex-row justify-start items-center space-x-1 mt-2">
           <span className="tracking-wide capitalize block px-2 py-0.5 rounded bg-coolGray-100 dark:bg-coolGray-900 text-xs text-coolGray-500 dark:text-coolGray-400 font-medium">
             {returnReadableIdentifier(trackingData.selectedShipmentType)}
           </span>
