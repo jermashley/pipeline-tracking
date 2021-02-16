@@ -12,11 +12,14 @@ import { FilterContext } from '@/lib/FilterContext'
 import { SearchContext } from '@/lib/SearchContext'
 
 const TrackingNumberForm = () => {
-  const { selectedIdentifier, trackingNumber, setTrackingNumber } = useContext(
-    FilterContext,
-  )
+  const {
+    selectedShipmentType,
+    selectedIdentifier,
+    trackingNumber,
+    setTrackingNumber,
+  } = useContext(FilterContext)
 
-  const { isLoading, searchForShipment, error } = useContext(SearchContext)
+  const { getTrackingData } = useContext(SearchContext)
 
   return (
     <>
@@ -26,7 +29,7 @@ const TrackingNumberForm = () => {
         <span
           className="transition-opacity duration-300 text-sm text-red-400"
           style={{
-            opacity: error ? 100 : 0,
+            opacity: getTrackingData.error ? 100 : 0,
           }}
         >
           <FontAwesomeIcon
@@ -62,7 +65,7 @@ const TrackingNumberForm = () => {
         />
 
         <div className="w-6 h-6 flex flex-row justify-start items-center">
-          {isLoading && (
+          {getTrackingData.isLoading && (
             <FontAwesomeIcon
               icon={faSpinnerThird}
               className="text-lg text-coolGray-400 animate-spin"
@@ -80,7 +83,15 @@ const TrackingNumberForm = () => {
             />
           </SmallButton>
 
-          <SmallButton onClick={() => searchForShipment()}>
+          <SmallButton
+            onClick={() =>
+              getTrackingData.mutate({
+                trackingNumber: trackingNumber,
+                selectedShipmentType: selectedShipmentType,
+                selectedIdentifier: selectedIdentifier,
+              })
+            }
+          >
             <FontAwesomeIcon
               icon={faSearch}
               fixedWidth={true}

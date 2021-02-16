@@ -56,7 +56,7 @@ const Home = () => {
         </div>
 
         {storedTrackingItems?.length >= 1 ? (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-4">
             {storedTrackingItems?.map((storedTrackingItem) => (
               <MiniCard
                 key={storedTrackingItem.key}
