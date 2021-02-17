@@ -87,7 +87,14 @@ const TrackingNumberForm = () => {
         />
 
         <div className="flex flex-row space-x-1 py-2 px-3 transform translate-x-px">
-          <SmallButton onClick={() => setTrackingNumber(``)}>
+          <SmallButton
+            onClick={() => setTrackingNumber(``)}
+            style={{
+              opacity: trackingNumber.length === 0 ? `0.5` : `1`,
+              pointerEvents: trackingNumber.length === 0 && true,
+              cursor: trackingNumber.length === 0 ? `not-allowed` : `pointer`,
+            }}
+          >
             <FontAwesomeIcon
               icon={faMinusCircle}
               fixedWidth={true}
@@ -103,6 +110,11 @@ const TrackingNumberForm = () => {
                 selectedIdentifier: selectedIdentifier,
               })
             }
+            style={{
+              opacity: trackingNumber.length === 0 ? `0.5` : `1`,
+              pointerEvents: trackingNumber.length === 0 && true,
+              cursor: trackingNumber.length === 0 ? `not-allowed` : `pointer`,
+            }}
           >
             <FontAwesomeIcon
               icon={faSearch}

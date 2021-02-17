@@ -1,8 +1,9 @@
-export const SmallButton = ({ children, type, className, onClick }) => (
+export const SmallButton = ({ children, className, onClick, type, style }) => (
   <button
     onClick={onClick}
     type={type ?? `button`}
     className={`flex flex-row justify-center items-center space-x-2 p-2 rounded-md bg-coolGray-100 text-coolGray-500 text-xs leading-none border border-transparent hover:border-coolGray-300 dark:bg-coolGray-700 dark:text-coolGray-100 dark:hover:border-coolGray-500 ${className}`}
+    style={style}
   >
     {children}
   </button>
