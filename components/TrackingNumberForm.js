@@ -26,24 +26,46 @@ const TrackingNumberForm = () => {
       <div className="flex flex-row justify-between items-center mt-16 mb-2">
         <Heading2>Tracking Number</Heading2>
 
-        <span
-          className="transition-opacity duration-300 text-sm text-red-400"
-          style={{
-            opacity: getTrackingData.error ? 100 : 0,
-          }}
-        >
-          <FontAwesomeIcon
-            icon={faExclamationCircle}
-            fixedWidth={true}
-            className="mr-1"
-          />
-          We couldn&apos;t find that shipment
-        </span>
+        {getTrackingData.isLoading && (
+          <div
+            className="animate-pulse flex flex-row justify-start items-center transition-opacity duration-300 text-sm text-coolGray-400"
+            style={{
+              opacity: getTrackingData.isLoading ? 100 : 0,
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faSpinnerThird}
+              className="text-coolGray-400 animate-spin mr-1"
+              fixedWidth={true}
+            />
+            Please wait while we look up the shipment details
+          </div>
+        )}
+
+        {getTrackingData.error && (
+          <div
+            className="flex flex-row justify-start items-center transition-opacity duration-300 text-sm text-red-400"
+            style={{
+              opacity: getTrackingData.error ? 100 : 0,
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faExclamationCircle}
+              fixedWidth={true}
+              className="mr-1"
+            />
+            We couldn&apos;t find that shipment
+          </div>
+        )}
       </div>
 
       <form
         onSubmit={(event) => event.preventDefault()}
-        className="flex flex-row justify-start items-center space-x-1 bg-white border border-coolGray-300 rounded-xl focus-within:border-blue-500 focus-within:border-dashed dark:bg-coolGray-800 dark:border-coolGray-600"
+        className={`transition-opacity duration-300 flex flex-row justify-start items-center space-x-1 bg-white border border-coolGray-300 rounded-xl focus-within:border-blue-500 focus-within:border-dashed dark:bg-coolGray-800 dark:border-coolGray-600`}
+        style={{
+          opacity: getTrackingData.isLoading ? 0.5 : 1,
+          pointerEvents: getTrackingData.isLoading && `none`,
+        }}
       >
         <input
           type="text"
@@ -63,16 +85,6 @@ const TrackingNumberForm = () => {
           id="searchOption"
           readOnly={true}
         />
-
-        <div className="w-6 h-6 flex flex-row justify-start items-center">
-          {getTrackingData.isLoading && (
-            <FontAwesomeIcon
-              icon={faSpinnerThird}
-              className="text-lg text-coolGray-400 animate-spin"
-              fixedWidth={true}
-            />
-          )}
-        </div>
 
         <div className="flex flex-row space-x-1 py-2 px-3 transform translate-x-px">
           <SmallButton onClick={() => setTrackingNumber(``)}>

@@ -1,14 +1,15 @@
 import { useContext } from 'react'
+import { LocalStorageContext } from '@/lib/LocalStorageContext'
+import { FilterContext } from '@/lib/FilterContext'
+import { SearchContext } from '@/lib/SearchContext'
+import Default from '@/layouts/default'
+import TrackingFilter from '@/components/TrackingFilter'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBan } from '@fortawesome/pro-solid-svg-icons'
-import { FilterContext } from '@/lib/FilterContext'
-import Default from '@/layouts/default'
 import { Heading1, Heading2 } from '@/components/Headings'
 import TrackingNumberForm from '@/components/TrackingNumberForm'
-import TrackingFilter from '@/components/TrackingFilter'
 import Overlay from '@/components/Overlay'
 import { SmallButton } from '@/components/Buttons'
-import { LocalStorageContext } from '@/lib/LocalStorageContext'
 import MiniCard from '@/components/MiniCard'
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
   const { storedTrackingItems, clearStoredTrackingItems } = useContext(
     LocalStorageContext,
   )
+  const { getTrackingData } = useContext(SearchContext)
 
   return (
     <Default>
@@ -38,11 +40,10 @@ const Home = () => {
 
       <TrackingNumberForm />
 
-      <Overlay active={trackingResults?.length !== 0}>
-        {trackingResults?.length !== 0 && (
-          <Heading2>{trackingResults?.id}</Heading2>
-        )}
-      </Overlay>
+      <Overlay
+        active={getTrackingData.isSuccess}
+        trackingData={trackingResults}
+      />
 
       <section className="mt-24">
         <div className="flex flex-row justify-between items-center">
