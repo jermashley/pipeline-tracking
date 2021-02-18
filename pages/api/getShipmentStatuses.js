@@ -34,5 +34,5 @@ export default async (req, res) => {
 
   setTimeout(() => {
     return res.json({ shipmentStatuses })
-  }, 2000)
+  }, 0)
 }

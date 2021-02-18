@@ -3,14 +3,14 @@ import { parse, format } from 'date-fns'
 const ShipmentStatuses = ({ shipmentStatuses, className }) => {
   return (
     <section
-      className={`w-full border border-coolGray-200 rounded-xl max-w-2xl mx-auto ${className}`}
+      className={`w-full border border-coolGray-200 dark:border-coolGray-500 rounded-xl max-w-2xl mx-auto ${className}`}
     >
       {shipmentStatuses.map((shipmentStatus) => (
         <div
           key={`${shipmentStatus.Id}_${shipmentStatus.QuoteId}`}
-          className="w-full grid grid-cols-12 px-6 py-4 odd:bg-coolGray-50 dark:odd:bg-coolGray-900 first:rounded-t-xl last:rounded-b-xl border-b border-coolGray-200 last:border-b-0"
+          className="w-full grid grid-cols-12 px-6 py-4 odd:bg-coolGray-50 dark:odd:bg-coolGray-700 first:rounded-t-xl last:rounded-b-xl border-b border-coolGray-200 dark:border-coolGray-500 last:border-b-0"
         >
-          <div className="w-full col-start-1 col-end-9 flex flex-col justify-start items-start">
+          <div className="w-full col-start-1 col-end-9 flex flex-col justify-start items-start self-center">
             <span className="text-coolGray-700 dark:text-coolGray-200 text-sm font-semibold leading-tight mb-1">
               {shipmentStatus.CurrentStatus}
             </span>

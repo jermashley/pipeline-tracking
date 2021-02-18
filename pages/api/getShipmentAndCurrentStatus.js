@@ -40,6 +40,6 @@ export default async (req, res) => {
 
     setTimeout(() => {
       return res.json({ shipmentData })
-    }, 2000)
+    }, 0)
   }
 }
