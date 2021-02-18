@@ -91,7 +91,7 @@ const TrackingNumberForm = () => {
             onClick={() => setTrackingNumber(``)}
             style={{
               opacity: trackingNumber.length === 0 ? `0.5` : `1`,
-              pointerEvents: trackingNumber.length === 0 && true,
+              pointerEvents: trackingNumber.length === 0 && `none`,
               cursor: trackingNumber.length === 0 ? `not-allowed` : `pointer`,
             }}
           >
@@ -112,7 +112,7 @@ const TrackingNumberForm = () => {
             }
             style={{
               opacity: trackingNumber.length === 0 ? `0.5` : `1`,
-              pointerEvents: trackingNumber.length === 0 && true,
+              pointerEvents: trackingNumber.length === 0 && `none`,
               cursor: trackingNumber.length === 0 ? `not-allowed` : `pointer`,
             }}
           >

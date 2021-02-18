@@ -132,9 +132,10 @@ module.exports = {
   variants: {
     extend: {
       animation: [`hover`, `focus`],
-      borderColor: [`hover`, `focus`],
-      borderRadius: [`hover`, `focus`],
-      borderWidth: [`hover`, `focus`],
+      backgroundColor: [`first`, `last`, `even`, `odd`],
+      borderColor: [`hover`, `focus`, `first`, `last`, `even`, `odd`],
+      borderRadius: [`hover`, `focus`, `first`, `last`],
+      borderWidth: [`hover`, `focus`, `first`, `last`],
       borderStyle: [`focus-within`, `focus`],
       translate: [`group-hover`],
       typography: [`dark`],

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBan } from '@fortawesome/pro-solid-svg-icons'
 import { Heading1, Heading2 } from '@/components/Headings'
 import TrackingNumberForm from '@/components/TrackingNumberForm'
-import Overlay from '@/components/Overlay'
+import TrackingDataModal from '@/components/TrackingDataModal'
 import { SmallButton } from '@/components/Buttons'
 import MiniCard from '@/components/MiniCard'
 
@@ -40,17 +40,34 @@ const Home = () => {
 
       <TrackingNumberForm />
 
-      <Overlay
-        active={getTrackingData.isSuccess}
-        trackingData={trackingResults}
-      />
+      <main
+        className="transition-opacity duration-300 fixed z-50 top-0 right-0 bottom-0 left-0 w-screen h-screen flex flex-col justify-start items-stretch bg-white dark:bg-coolGray-900 bg-opacity-50"
+        style={{
+          backdropFilter: `blur(16px)`,
+          WebkitBackdropFilter: `blur(16px)`,
+          opacity: getTrackingData.isSuccess ? 100 : 0,
+          pointerEvents: getTrackingData.isSuccess || `none`,
+        }}
+      >
+        {getTrackingData.isSuccess && (
+          <TrackingDataModal trackingData={trackingResults} />
+        )}
+      </main>
 
       <section className="mt-24">
         <div className="flex flex-row justify-between items-center">
           <Heading2>Recently Tracked</Heading2>
 
           {storedTrackingItems?.length >= 1 && (
-            <SmallButton onClick={() => clearStoredTrackingItems()}>
+            <SmallButton
+              onClick={() => clearStoredTrackingItems()}
+              style={{
+                opacity: storedTrackingItems?.length === 0 ? `0.5` : `1`,
+                pointerEvents: storedTrackingItems?.length === 0 && `none`,
+                cursor:
+                  storedTrackingItems?.length === 0 ? `not-allowed` : `pointer`,
+              }}
+            >
               <FontAwesomeIcon icon={faBan} fixedWidth={true} />
             </SmallButton>
           )}

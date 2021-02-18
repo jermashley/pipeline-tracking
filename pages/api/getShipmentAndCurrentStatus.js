@@ -4,7 +4,7 @@ export default async (req, res) => {
   if (req.method === `POST`) {
     const { data } = await axios
       .post(
-        process.env.PIPELINE_API_BASE_URL,
+        `${process.env.PIPELINE_API_BASE_URL}/shipmentSearch`,
         {
           trackNum: req.body.trackNum,
           searchOption: req.body.searchOption,
@@ -17,16 +17,17 @@ export default async (req, res) => {
           },
         },
       )
-      .then((res) => {
-        if (res.data.data.length === 0 || res.data.data[0]?.id === `348`) {
+      .then((r) => {
+        if (r.data.data.length === 0 || r.data.data[0]?.id === `348`) {
           throw new Error(`No shipment data returned.`)
         }
 
         res.statusCode = 200
 
-        return res.data
+        return r.data
       })
       .catch((e) => {
+        console.log(e)
         res.statusCode = 404
       })
 
@@ -39,6 +40,6 @@ export default async (req, res) => {
 
     setTimeout(() => {
       return res.json({ shipmentData })
-    }, 5000)
+    }, 2000)
   }
 }

@@ -18,7 +18,7 @@ const MiniCard = ({ trackingData }) => {
           {trackingData[trackingData.selectedIdentifier]}
         </p>
 
-        <p className="text-coolGray-500 dark:text-coolGray-400 text-xs font-normal leading-tight">
+        <p className="text-coolGray-500 dark:text-coolGray-400 text-xs font-normal leading-normal">
           <time>{format(trackingData.key, `PP`)}</time>
           <span className="mx-1">&#64;</span>
           <time>{format(trackingData.key, `p`)}</time>
