@@ -98,6 +98,7 @@ const TrackingDataModal = ({ trackingData }) => {
             marginBottom: `64px`,
             width: `100%`,
             height: `calc(100% - 52px)`,
+            flexGrow: 1,
           }}
         />
       )}
