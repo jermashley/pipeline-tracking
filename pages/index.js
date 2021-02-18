@@ -83,7 +83,7 @@ const Home = () => {
             ))}
           </div>
         ) : (
-          <p className="text-xl text-coolGray-500 font-medium mt-4">
+          <p className="text-xl text-coolGray-400 font-medium mt-4">
             Nothing here &mdash; yet!
           </p>
         )}
