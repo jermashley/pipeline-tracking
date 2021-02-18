@@ -15,27 +15,29 @@ const ShipmentStatuses = ({ shipmentStatuses, className }) => {
               {shipmentStatus.CurrentStatus}
             </span>
 
-            <time className="text-coolGray-500 dark:text-coolGray-400 text-xs font-normal leading-tight">
-              {format(
-                parse(
-                  shipmentStatus.StatusDateTime,
-                  `yyyy-MM-dd H:mm:ss`,
-                  new Date(),
-                ),
-                `MMM do, y`,
-              )}
-              <span className="mx-1">&#64;</span>
-              <span className="font-semibold">
+            {shipmentStatus.StatusDateTime && (
+              <time className="text-coolGray-500 dark:text-coolGray-400 text-xs font-normal leading-tight">
                 {format(
                   parse(
-                    shipmentStatus.StatusDateTime,
+                    shipmentStatus?.StatusDateTime,
                     `yyyy-MM-dd H:mm:ss`,
                     new Date(),
                   ),
-                  `h:mm a`,
+                  `MMM do, y`,
                 )}
-              </span>
-            </time>
+                <span className="mx-1">&#64;</span>
+                <span className="font-semibold">
+                  {format(
+                    parse(
+                      shipmentStatus?.StatusDateTime,
+                      `yyyy-MM-dd H:mm:ss`,
+                      new Date(),
+                    ),
+                    `h:mm a`,
+                  )}
+                </span>
+              </time>
+            )}
           </div>
 
           <div className="col-start-9 col-end-13 text-right self-center">
