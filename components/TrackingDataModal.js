@@ -8,7 +8,6 @@ import { faTimes } from '@fortawesome/pro-light-svg-icons'
 import { Heading2 } from '@/components/Headings'
 import ShipmentStatuses from '@/components/ShipmentStatuses'
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons'
-import { returnReadableIdentifier } from '@/lib/readableIdentifiers'
 
 const TrackingDataModal = ({ trackingData }) => {
   const { setTrackingResults, setTrackingNumber } = useContext(FilterContext)
@@ -45,17 +44,17 @@ const TrackingDataModal = ({ trackingData }) => {
       style={{
         overflowY: trackingData.selectedShipmentType === `domestic` && `scroll`,
       }}
-      className="flex flex-col justify-start items-stretch flex-grow w-full max-w-4xl mx-auto my-12 shadow-2xl rounded-lg border bg-white dark:bg-coolGray-800 border-coolGray-200 dark:border-coolGray-700"
+      className="flex flex-col items-stretch justify-start flex-grow w-full max-w-4xl mx-auto my-12 bg-white border rounded-lg shadow-2xl dark:bg-coolGray-800 border-coolGray-200 dark:border-coolGray-700"
     >
-      <header className="bg-white dark:bg-coolGray-800 sticky top-0 flex flex-row justify-between items-center px-8 py-6">
+      <header className="sticky top-0 flex flex-row items-center justify-between px-8 py-6 bg-white dark:bg-coolGray-800">
         <div className="flex flex-row">
           <Heading2>Tracking Information</Heading2>
 
           {getShipmentStatuses.isFetching && (
-            <div className="animate-pulse flex flex-row justify-center items-center text-sm text-coolGray-400 ml-4">
+            <div className="flex flex-row items-center justify-center ml-4 text-sm animate-pulse text-coolGray-400">
               <FontAwesomeIcon
                 icon={faSpinnerThird}
-                className="animate-spin mr-1"
+                className="mr-1 animate-spin"
                 fixedWidth={true}
               />
             </div>
@@ -71,8 +70,8 @@ const TrackingDataModal = ({ trackingData }) => {
       </header>
 
       {trackingData.selectedShipmentType === `domestic` && (
-        <div className="relative flex flex-col justify-start items-stretch flex-grow overflow-y-scroll pb-8">
-          <div className="px-8 w-full mx-auto">
+        <div className="relative flex flex-col items-stretch justify-start flex-grow pb-8 overflow-y-scroll">
+          <div className="w-full px-8 mx-auto">
             <p className="text-base font-medium text-coolGray-600 dark:text-coolGray-200">
               {trackingData[trackingData.selectedIdentifier]}
             </p>
